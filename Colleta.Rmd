@@ -1,0 +1,139 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+
+
+# Group the data by month and sum the sales for each month
+Colleta_monthly <- Colleta %>%
+  mutate(month = floor_date(TRNS.DATE, "month")) %>%
+  group_by(month) %>%
+  summarize(Sales = sum(VALUE)) %>% arrange(desc(month))
+
+# Create a time series plot
+plot(PlotColleta <- ggplot(Colleta_monthly, aes(x = month, y = Sales)) +
+  geom_line(color = "#101111") +
+     geom_area(fill = "#53a071") +
+    theme( plot.title = element_text(hjust = 0.5)) +
+  scale_x_date(date_breaks = "3 month", date_labels = "%b %Y") +
+  labs(title = "Sales Over Time",
+       x = "Month",
+       y = "Sales"))
+
+
+```
+```{r}
+# Aggregate data by summing values for each category
+
+ColletaSum <- Colleta %>%
+  group_by(CUSTOMER) %>%
+  summarize(Value = sum(VALUE))
+ 
+
+# Horizontal bar plot 
+plot(ColletaBar <- ggplot(ColletaSum, aes(x = CUSTOMER, y = Value , fill = CUSTOMER)) +
+  geom_bar(stat = "identity", position = "identity") +
+  coord_flip() + 
+  theme_minimal() +
+  theme(legend.position = "none",
+        plot.title = element_text(hjust = 0.5)) +
+  labs(
+    title = "Store Performance",
+  ))
+
+
+
+```
+```{r}
+# Group the data by month and sum the sales for each month
+Colleta_monthly <- Colleta %>%
+  group_by(month = format(floor_date(TRNS.DATE, unit = "month"), "%Y-%m")) %>%
+  summarise(Sales = sum(VALUE)) %>% arrange(desc(month))
+
+Colleta_totals <- Colleta_monthly %>% 
+mutate(Targets = c(1510449.76,1510449.76 ,1510449.76,1648298.12,1648298.12,1648298.12, 0,0,0,0,0,0,0,0,0,0,0,0,0)) %>% mutate(`Achievement % ` =  paste0(round(Sales / Targets * 100), "%")) 
+
+
+
+# Format the salary column as custom accounting values
+
+Colleta_totals$Sales <- format(Colleta_totals$Sales, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Colleta_totals$Targets <- format(Colleta_totals$Targets, big.mark = ",", decimal.mark = ".", nsmall = 0)
+
+
+```
+
+
+```{r}
+# Group the data by month and sum the sales for each month
+
+Colleta_Customer <- Colleta %>%
+  group_by(month = format(floor_date(TRNS.DATE, unit = "month"), "%Y-%m"),CUSTOMER) %>%
+  summarise(Sales = sum(VALUE)) %>% arrange(desc(month))
+
+
+# Reshape the data from long to wide format
+Colleta_Customerwide <- dcast(Colleta_Customer,  CUSTOMER ~ month , value.var = "Sales") %>% select(1,20,19,18,17,16) %>% arrange(desc(`2023-04`))
+
+
+# Format the salary column as custom accounting values
+
+Colleta_Customerwide$`2023-06` <- format(Colleta_Customerwide$`2023-06`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Colleta_Customerwide$`2023-05` <- format(Colleta_Customerwide$`2023-05`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Colleta_Customerwide$`2023-04` <- format(Colleta_Customerwide$`2023-04`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Colleta_Customerwide$`2023-03` <- format(Colleta_Customerwide$`2023-03`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Colleta_Customerwide$`2023-02` <- format(Colleta_Customerwide$`2023-02`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Colleta_Customerwide$`2023-01` <- format(Colleta_Customerwide$`2023-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+
+
+```
+
+```{r}
+# Group the data by month and sum the sales for each month
+
+
+Colleta_brand <- Colleta %>%
+  group_by(month = format(floor_date(TRNS.DATE, unit = "month"), "%Y-%m"),BRAND) %>%
+  summarise(Sales = sum(VALUE))
+
+
+
+
+# Reshape the data from long to wide format
+Colleta_Brandwide <- dcast(Colleta_brand, BRAND  ~  month, value.var = "Sales") %>% select(1,20,19,18,17,16)  %>% arrange(desc(`2023-04`))
+
+
+# Format the salary column as custom accounting values
+
+Colleta_Brandwide$`2023-06` <- format(Colleta_Brandwide$`2023-06`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Colleta_Brandwide$`2023-05` <- format(Colleta_Brandwide$`2023-05`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Colleta_Brandwide$`2023-04` <- format(Colleta_Brandwide$`2023-04`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Colleta_Brandwide$`2023-03` <- format(Colleta_Brandwide$`2023-03`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Colleta_Brandwide$`2023-02` <- format(Colleta_Brandwide$`2023-02`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Colleta_Brandwide$`2023-01` <- format(Colleta_Brandwide$`2023-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+
+```
+
+
+```{r}
+# Group the data by month and sum the sales for each month
+
+Colleta_branch <- Colleta %>%
+  group_by(month = format(floor_date(TRNS.DATE, unit = "month"), "%Y-%m"),BRANCH) %>%
+  summarise(Sales = sum(VALUE))
+
+# Reshape the data from long to wide format
+Colleta_branchWide <- dcast(Colleta_branch, BRANCH ~ month , value.var = "Sales") %>%  arrange(desc(`2023-04`))%>% select(1,20,19,18,17,16)
+
+
+# Format the salary column as custom accounting values
+
+Colleta_branchWide$`2023-06` <- format(Colleta_branchWide$`2023-06`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Colleta_branchWide$`2023-05` <- format(Colleta_branchWide$`2023-05`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Colleta_branchWide$`2023-04` <- format(Colleta_branchWide$`2023-04`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Colleta_branchWide$`2023-03` <- format(Colleta_branchWide$`2023-03`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Colleta_branchWide$`2023-02` <- format(Colleta_branchWide$`2023-02`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Colleta_branchWide$`2023-01` <- format(Colleta_branchWide$`2023-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+```
+

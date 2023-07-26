@@ -1,0 +1,25 @@
+con <- dbConnect(MySQL(), user = "root", password = "", dbname = "price_db", host = "localhost")
+
+# Create the table
+dbSendQuery(con, "CREATE TABLE Naivas4 (ProductName VARCHAR(100), Availability VARCHAR(50), Description VARCHAR(500), Price VARCHAR(20))")
+
+# Define the URL of the website to scrape
+url <- "https://naivas.online/module/ambjolisearch/jolisearch?s=maize+meal"
+
+# Send a GET request to the URL and read the HTML content
+page <- read_html(url)
+
+# Extract the desired information using CSS selectors
+product_names <- page %>% html_nodes(".product-name") %>% html_text()
+product_availabilities <- page %>% html_nodes(".product-availability") %>% html_text()
+product_descriptions <- page %>% html_nodes(".product-description-short") %>% html_text()
+prices <- page %>% html_nodes(".product-price") %>% html_text()
+
+# Insert data into the database table
+for (i in 1:length(product_names)) {
+  query <- paste0("INSERT INTO Naivas4 (ProductName, Availability, Description, Price) VALUES ('", product_names[i], "', '", product_availabilities[i], "', '", product_descriptions[i], "', '", prices[i], "')")
+  dbSendQuery(con, query)
+}
+
+# Close the database connection
+dbDisconnect(con)

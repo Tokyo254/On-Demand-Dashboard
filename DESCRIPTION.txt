@@ -1,0 +1,32 @@
+Package: app.R
+Title: On Demand Dashboard
+Version: 0.1
+Authors@R: 
+    person("Keith", email = "Keith@adroitproconsulting.com", role = c("Data Analyst", "cre"))
+Description: Sales Dashboard.
+License: MIT
+Encoding: UTF-8
+LazyData: true
+Imports:
+    ggplot2,
+    dplyr,
+    shiny,
+shinydashboard,
+DT,
+shinythemes,
+formattable,
+reactable,
+kableExtra,
+shinyjs,
+tidyselect,
+dplyr,
+lubridate,
+reshape2,
+ggplot2,
+rsconnect,
+flexdashboard,
+tidyverse,
+shinythemes,
+shinyBS,
+reactable,
+lubridate,

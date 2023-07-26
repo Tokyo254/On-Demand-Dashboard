@@ -1,0 +1,110 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+# Group the data by month and sum the sales for each month
+Data_monthly <- Data %>%
+  mutate(month = floor_date(TRNS.DATE, "month")) %>%
+  group_by(month) %>%
+  summarize(Sales = sum(VALUE)) 
+
+# Create a time series plot
+
+# convert month column to date format
+Data_monthly$month <- as.Date(paste0(Data_monthly$month, "-01"))
+
+# create xts time series object
+Data_monthlyts <- xts(Data_monthly$Sales, order.by = Data_monthly$month)
+
+PlotData <- dygraph(Data_monthlyts)%>%
+  dyHighlight(highlightCircleSize = 5, 
+              highlightSeriesOpts = list(strokeWidth = 3)) %>%
+  dyOptions(colors = RColorBrewer::brewer.pal(8, "Dark2")) %>%
+  dyLegend(show = "always") 
+PlotData
+```
+
+```{r}
+# Group the data by month and sum the sales for each month
+
+Data_monthly <- Data %>%
+  group_by(month = format(floor_date(TRNS.DATE, unit = "month"), "%Y-%m")) %>%
+  summarise(Sales = sum(VALUE)) %>% 
+  arrange(desc(month))
+
+# Creating a new Column
+Data_total <-
+Data_monthly %>%  mutate(Targets = c(8985647.57,12006715.10, 12006715.10, 15588555.38, 15588555.38, 15588555.38, NA,  NA,  NA, NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA)) %>% mutate(`Achievement % ` = ifelse(is.na(Targets), NA,  paste0(round(Sales / Targets * 100), "%")))
+
+# Format the salary column as custom accounting values
+
+Data_total$Sales <- format(Data_total$Sales, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Data_total$Targets <- format(Data_total$Targets, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Data_total
+```
+
+```{r}
+# Group the data by month and sum the sales for each month
+Data_monthly <- Data %>%
+  mutate(month = floor_date(TRNS.DATE, "month")) %>%
+  group_by(month) %>%
+  summarize(Sales = sum(VALUE)) %>% arrange(desc(month))
+
+# Horizontal bar plot 
+plot(OverallBar <- ggplot(Data_monthly, aes(x = month, y = Sales , fill = month)) +
+  geom_bar(stat = "identity", position = "identity") +
+  theme_minimal() +
+  theme(legend.position = "none",
+        plot.title = element_text(hjust = 0.5)) +
+  labs(
+    title =  "Overall Performance",
+  ))
+```
+```{r}
+
+# Group the data by month and sum the sales for each month
+Overall_brand <- Data %>%
+  group_by(month = format(floor_date(TRNS.DATE, unit = "month"), "%Y-%m"), BRAND ) %>%
+  summarise(Sales = sum(VALUE)) %>%  arrange(desc(BRAND))
+
+
+# Reshape the data from long to wide format
+Overall_Brandwide <- dcast(Overall_brand, BRAND  ~  month, value.var = "Sales") %>% select(1,29,28,27,26,25,24,23) %>% arrange(desc(`2023-07`)) 
+
+# Format the salary column as custom accounting values
+
+Overall_Brandwide$`2023-07` <- format(Overall_Brandwide$`2023-07`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Overall_Brandwide$`2023-06` <- format(Overall_Brandwide$`2023-06`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Overall_Brandwide$`2023-05` <- format(Overall_Brandwide$`2023-05`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Overall_Brandwide$`2023-04` <- format(Overall_Brandwide$`2023-04`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Overall_Brandwide$`2023-03` <- format(Overall_Brandwide$`2023-03`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Overall_Brandwide$`2023-02` <- format(Overall_Brandwide$`2023-02`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Overall_Brandwide$`2023-01` <- format(Overall_Brandwide$`2023-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Overall_Brandwide
+```
+
+
+```{r}
+
+# Group the data by month and sum the sales for each month
+Data_SalesRep <- Data %>%
+  group_by(month = format(floor_date(TRNS.DATE, unit = "month"), "%Y-%m"), SALES.REP ) %>%
+  summarise(Sales = sum(VALUE)) %>% arrange(desc(month))
+
+# Reshape the data from long to wide format
+Data_SalesRepwide <- dcast(Data_SalesRep,SALES.REP ~  month, value.var = "Sales") %>% select(1,29,28,27,26,25,24,23) %>% arrange(desc(`2023-07`))
+
+# Format the salary column as custom accounting values
+
+Data_SalesRepwide$`2023-07` <- format(Data_SalesRepwide$`2023-07`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Data_SalesRepwide$`2023-06` <- format(Data_SalesRepwide$`2023-06`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Data_SalesRepwide$`2023-05` <- format(Data_SalesRepwide$`2023-05`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Data_SalesRepwide$`2023-04` <- format(Data_SalesRepwide$`2023-04`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Data_SalesRepwide$`2023-03` <- format(Data_SalesRepwide$`2023-03`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Data_SalesRepwide$`2023-02` <- format(Data_SalesRepwide$`2023-02`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Data_SalesRepwide$`2023-01` <- format(Data_SalesRepwide$`2023-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Data_SalesRepwide
+```
+

@@ -1,0 +1,13 @@
+name: On_DemandDashboard
+title: On_DemandDashboard
+username:
+account: c7y2c8-keith-osogo
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 9277305
+bundleId: 7325048
+url: https://c7y2c8-keith-osogo.shinyapps.io/On_DemandDashboard/
+when: 1686319686.86616
+lastSyncTime: 1686319686.86618
+asMultiple: FALSE
+asStatic: FALSE

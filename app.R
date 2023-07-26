@@ -1,0 +1,393 @@
+ui <- dashboardPage(
+  dashboardHeader(title = "On Demand",
+                  dropdownMenuOutput("messageMenu"),
+                  titleWidth = 300
+  ),
+  
+  dashboardSidebar(
+    sidebarMenu(
+      menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
+      menuItem("Targets", tabName = "Targets", icon = icon("th")),
+      menuItem(" Weekly_Performance", tabName = "Weekly_Performance", icon = icon("th")),
+      menuItem("Sales_Forecast", tabName = "Sales_Forecast", icon = icon("th")),
+      menuItem("Regina", tabName = "Regina", icon = icon("user")),
+      menuItem("Beatrice", tabName = "Beatrice", icon = icon("user")),
+      menuItem("Richard", tabName = "Richard", icon = icon("user")),
+      menuItem("Wanyonyi", tabName = "Wanyonyi", icon = icon("user")),
+      menuItem("Colleta", tabName = "Colleta", icon = icon("user")),
+      menuItem("Walter", tabName = "Walter", icon = icon("user"))
+      
+    )
+  ),
+  
+  ## Body content
+  
+  dashboardBody(
+    tabItems(
+      # First tab content
+      tabItem(tabName = "dashboard",
+              fluidPage(
+                fluidRow(
+                  box(plotOutput("plot1", height = 250),width = 6),
+                  infoBox("Last Update", "31/05/2023" , icon = icon("credit-card"), fill = TRUE, width = 6),
+                  # Dynamic infoBoxes
+                  box(plotOutput("OverallBar", height = 250)),
+                ),
+                h2("Overall Performance"),
+                DTOutput("Data_total"),
+                h2("Accounts Performance"),
+                DTOutput("Data_SalesRepwide"),
+                h2("Brand Performance"),
+                DTOutput("Overall_Brandwide"),
+              )
+      ),
+      # Third tab content
+      tabItem(tabName = "Targets",
+              h2("Accounts Targets"),
+              DTOutput("Targets")
+              
+      ),
+      # Forth tab content
+      tabItem(tabName = "Weekly_Performance",
+              fluidRow(),
+              fluidPage(
+                h2("Weekly Performance"),
+                DTOutput("Weekly_SalesRepwide"),
+              )
+      ),
+      # Fifth tab content
+      tabItem(tabName = "Sales_Forecast",
+              h2("Sales Rep Performance Per Store")
+      ),
+      # Sixth tab content
+      tabItem(tabName = "Regina",
+              h2("Regina"),
+              fluidPage(
+                fluidRow(
+                  box(plotOutput("plot2", height = 250), width = 8),
+                  infoBox(strong("Total May Sales, 49% below Target "), 1712306.48 , icon = icon("credit-card"), fill = TRUE, width = 4),
+                  box(plotOutput("plot11", height = 250), width = 4)),
+                h2("Monthly Performance"),
+                DTOutput("Regina_monthlywide"),
+                h2("Account Contribution"),
+                DTOutput("Regina_wide"),
+                h2("Account Performance"),
+                DTOutput("Regina_Customerwide"),
+                h2("Brand Performance"),
+                DTOutput("Regina_Brandwide"),
+                h2("Branch Performance"),
+                DTOutput("Regina_branchWide")
+              )
+      ),
+      # Seventh tab content
+      tabItem(tabName = "Beatrice",
+              h2("Beatrice"),
+              fluidPage(tags$head(
+                tags$style(
+                  HTML("
+                                        h2 {
+                                          font-weight: bold;
+                                          text-align: center;
+                                        }
+                                      ")
+                )
+              ),
+              box(plotOutput("plot3", height = 250), width = 600),
+              fluidRow( box(plotOutput("plot10", height = 150))),
+              h2("Monthly Performance"),
+              DTOutput("Beatrice_monthlywide"),
+              h2("Account Contribution"),
+              DTOutput("Beatrice_wide"),
+              h2("Account Performance"),
+              DTOutput("Beatrice_Customerwide"),
+              h2("Brand Performance"),
+              DTOutput("Beatrice_Brandwide"),
+              h2("Branch Performance"),
+              DTOutput("Beatrice_branchWide")
+              )
+      ),
+      # Eight tab content
+      tabItem(tabName = "Richard",
+              h2("Richard"),
+              fluidRow(box(plotOutput("plot4", height = 250), width = 8),
+                       infoBox("Total May Sales", 145762.94 , icon = icon("credit-card"), fill = TRUE, width = 4)),
+              fluidPage(
+                box(plotOutput("plotRichard", height = 450), width = 600),
+                h2("Monthly Performance"),
+                DTOutput("Richard_total"),
+                h2("Account Performance"),
+                DTOutput("Richard_CustoRmerwide"),
+                h2("Brand Performance"),
+                DTOutput("Richard_Brandwide"),
+                h2("Branch Performance"),
+                DTOutput("Richard_branchWide")
+              )
+      ),
+      # Nineth tab content
+      tabItem(tabName = "Wanyonyi",
+              h2("Wanyonyi"),
+              fluidRow(box(plotOutput("plot5", height = 250), width = 8),
+                       infoBox("Total May Sales", 2317641.13	 , icon = icon("credit-card"), fill = TRUE, width = 4)),
+              fluidPage(
+                box(plotOutput("plotWanyonyi", height = 250),width = 600),
+                h2("Monthly Performance"),
+                DTOutput("Wanyonyi_total"),
+                h2("Account Performance"),
+                DTOutput("Wanyonyi_Customerwide"),
+                h2("Brand Performance"),
+                DTOutput("Wanyonyi_Brandwide"),
+                h2("Store Performance"),
+                DTOutput("Wanyonyi_wide"),
+                
+              )
+      ),
+      # Tenth tab content
+      tabItem(tabName = "Colleta",
+              box(plotOutput("plot6", height = 250), width = 600),
+              h2("Monthly Performance"),
+              DTOutput("Colleta_totals"),
+              h2("Account Performance"),
+              DTOutput("Colleta_Customerwide"),
+              h2("Brand Performance"),
+              DTOutput("Colleta_Brandwide"),
+              h2("Branch Performance"),
+              DTOutput("Colleta_branchWide"),
+      ),
+      # Tenth tab content
+      tabItem(tabName = "Walter",
+              h4("Walter"),
+              box(plotOutput("plotWalter", height = 250)),
+              fluidPage(
+                DTOutput("Walter_total"),
+                h2("Brand Performance"),
+                DTOutput("Walter_Brandwide"),
+                
+              )
+      )
+    )
+  )
+  
+)
+
+
+server <- function(input, output) {
+  
+  output$plot1 <- renderPlot({
+    plot(PlotData)
+  })
+  output$plot2 <- renderPlot({
+    plot(PlotRegina)
+  })
+  output$plot3 <- renderPlot({
+    plot(PlotBeatrice)
+  })
+  output$plot4 <- renderPlot({
+    plot(PlotRichard)
+  })
+  output$plot5 <- renderPlot({
+    plot(PlotWanyonyi)
+  })
+  output$plot6 <- renderPlot({
+    plot(PlotColleta)
+  })
+  output$plot10 <- renderPlot({
+    plot(BeatriceBar)
+  })
+  #Regina Horizontal Plot
+  output$plot11 <- renderPlot({
+    plot(ReginaBar)
+  })
+  #Richard Horizontal Plot
+  output$plotRichard <- renderPlot({
+    plot(RichardBar)
+  })
+  #Wanyonyi Horizontal Plot
+  output$plotWanyonyi <- renderPlot({
+    plot(WanyonyiBar)
+  })
+  #Wanyonyi Horizontal Plot
+  output$plotWalter <- renderPlot({
+    plot(PlotWalter)
+  })
+  
+  #Sales Horizontal Plot
+  output$OverallBar <- renderPlot({
+    plot(OverallBar)
+  })
+  
+  # Targets table
+  output$Targets <- renderDT({
+    Targets %>% select(1,9)
+  }, options = list(pageLength = 20, scrollX = TRUE,
+                    rownames = FALSE ))
+  
+  
+  # Render Beatrice's table
+  output$Beatrice_wide <- renderDT({
+    Beatrice_wide 
+  }, options = list(pageLength = 5, scrollX = TRUE,
+                    rownames = FALSE ))
+  output$Beatrice_branchWide <- renderDT({
+    Beatrice_branchWide
+  }, options = list(pageLength = 100, scrollX = TRUE,
+                    rownames = FALSE ))
+  output$Beatrice_Customerwide <- renderDT({
+    Beatrice_Customerwide
+  }, options = list(pageLength = 5, scrollX = TRUE,
+                    rownames = FALSE ))
+  output$Beatrice_Brandwide <- renderDT({
+    Beatrice_Brandwide
+  }, options = list(pageLength = 11, scrollX = TRUE,
+                    rownames = FALSE ))
+  output$Beatrice_monthlywide <- renderDT({
+    Beatrice_monthlywide
+  }, options = list(pageLength = 5, scrollX = TRUE,
+                    rownames = FALSE ))
+  
+  
+  # Render Regina's table
+  output$Regina_monthlywide <- renderDT({
+    Regina_monthlywide 
+  }, options = list(pageLength = 5, scrollX = TRUE,
+                    rownames = FALSE ))
+  output$Regina_wide <- renderDT({
+    Regina_wide 
+  }, options = list(pageLength = 5, scrollX = TRUE,
+                    rownames = FALSE ))
+  output$Regina_branchWide <- renderDT({
+    Regina_branchWide 
+  }, options = list(pageLength = 40, scrollX = TRUE,
+                    rownames = FALSE ))
+  
+  output$Regina_Customerwide <- renderDT({
+    Regina_Customerwide 
+  }, options = list(pageLength = 5, scrollX = TRUE,
+                    rownames = TRUE ))
+  output$Regina_Brandwide <- renderDT({
+    Regina_Brandwide
+  }, options = list(pageLength = 11, scrollX = TRUE,
+                    rownames = FALSE ))
+  
+  
+  
+  
+  # Render Richard's table
+  
+  output$Richard_branchWide <- renderDT({
+    Richard_branchWide 
+  }, options = list(pageLength = 10, scrollX = TRUE,
+                    rownames = FALSE ))
+  output$Richard_total <- renderDT({
+    Richard_total
+  }, options = list(pageLength = 5, scrollX = TRUE,
+                    rownames = FALSE ))
+  output$Richard_CustoRmerwide <- renderDT({
+    Richard_CustoRmerwide 
+  }, options = list(pageLength = 10, scrollX = TRUE,
+                    rownames = FALSE ))
+  output$Richard_Brandwide <- renderDT({
+    Richard_Brandwide
+  }, options = list(pageLength = 19, scrollX = TRUE,
+                    rownames = FALSE ))
+  
+  
+  # Render Wanyonyi's table
+  output$Wanyonyi_wide <- renderDT({
+    Wanyonyi_wide 
+  }, options = list(pageLength = 10, scrollX = TRUE,
+                    rownames = FALSE ))
+  output$Wanyonyi_total <- renderDT({
+    Wanyonyi_total
+  }, options = list(pageLength = 5, scrollX = TRUE,
+                    rownames = FALSE ))
+  output$Wanyonyi_Customerwide <- renderDT({
+    Wanyonyi_Customerwide
+  }, options = list(pageLength = 10, scrollX = TRUE,
+                    rownames = FALSE ))
+  
+  output$Wanyonyi_Brandwide <- renderDT({
+    Wanyonyi_Brandwide
+  }, options = list(pageLength = 18, scrollX = TRUE,
+                    rownames = FALSE ))
+  
+  
+  
+  
+  # Render Walter's table
+  output$Walter_total <- renderDT({
+    Walter_total 
+  }, options = list(pageLength = 10, scrollX = TRUE,
+                    rownames = FALSE ))
+  
+  output$Walter_Brandwide <- renderDT({
+    Walter_Brandwide
+  }, options = list(pageLength = 5, scrollX = TRUE,
+                    rownames = FALSE ))
+  
+  
+  
+  # Render Sales's table
+  output$Data_total <- renderDT({
+    Data_total 
+  }, options = list(pageLength = 5, scrollX = TRUE,
+                    rownames = FALSE ))
+  output$Overall_Brandwide <- renderDT({
+    Overall_Brandwide
+  }, options = list(pageLength = 21, scrollX = TRUE,
+                    rownames = FALSE ))
+  output$Data_SalesRepwide <- renderDT({
+    Data_SalesRepwide
+  }, options = list(pageLength = 6, scrollX = TRUE,
+                    rownames = FALSE ))
+  
+  
+  
+  # Render Colleta's table
+  output$Colleta_totals <- renderDT({
+    Colleta_totals
+  }, options = list(pageLength = 5, scrollX = TRUE,
+                    rownames = FALSE ))
+  
+  output$Colleta_Customerwide <- renderDT({
+    Colleta_Customerwide
+  }, options = list(pageLength = 7, scrollX = TRUE,
+                    rownames = FALSE ))
+  output$Colleta_Brandwide <- renderDT({
+    Colleta_Brandwide
+  }, options = list(pageLength = 8, scrollX = TRUE,
+                    rownames = FALSE ))
+  
+  output$Colleta_branchWide <- renderDT({
+    Colleta_branchWide
+  }, options = list(pageLength = 50, scrollX = TRUE,
+                    rownames = FALSE ))
+  
+  
+  # Render Weekly's table
+  output$Weekly_SalesRepwide <- renderDT({
+    Weekly_SalesRepwide 
+  }, options = list(pageLength = 5, scrollX = TRUE,
+                    rownames = FALSE ))
+  
+  
+  output$messageMenu <- renderMenu({
+    # Code to generate each of the messageItems here, in a list. This assumes
+    # that messageData is a data frame with two columns, 'from' and 'message'.
+    msgs <- apply(messageData, 1, function(row) {
+      messageItem(from = row[["from"]], message = row[["message"]])
+    })
+    
+    # This is equivalent to calling:
+    #   dropdownMenu(type="messages", msgs[[1]], msgs[[2]], ...)
+    dropdownMenu(type = "messages", .list = msgs)
+  })
+}
+
+shinyApp(ui, server)
+
+rsconnect::setAccountInfo(name='c7y2c8-keith-osogo',
+                          token='421D040275F4E9C2E07E8C78F6492EF5',
+                          secret='AmnbjMJNWf8foEbX6zGU9IVXYZItEUNkfqpDsbyl')
+
+rsconnect::deployApp(appDir = getwd()
+)

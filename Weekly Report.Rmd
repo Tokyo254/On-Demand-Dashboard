@@ -1,0 +1,59 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+
+# Group data by week and sum values
+weekly_sum <- Data %>%
+  group_by(week = format(TRNS.DATE, "%Y-%U"),SALES.REP) %>%
+  summarise(sum = sum(VALUE)) %>% arrange(desc(week))
+
+# Reshape the data from long to wide format
+Weekly_SalesRepwide <- dcast(weekly_sum, SALES.REP ~  week, value.var = "sum") %>% select(1,124,123,122,121,120,119,118,117,116,115,114,113,112,111,110) %>% arrange(desc(`2023-29`))
+
+# Format the salary column as custom accounting values
+Weekly_SalesRepwide$`2023-30` <- format(Weekly_SalesRepwide$`2023-30`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Weekly_SalesRepwide$`2023-29` <- format(Weekly_SalesRepwide$`2023-29`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Weekly_SalesRepwide$`2023-28` <- format(Weekly_SalesRepwide$`2023-28`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Weekly_SalesRepwide$`2023-27` <- format(Weekly_SalesRepwide$`2023-27`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Weekly_SalesRepwide$`2023-26` <- format(Weekly_SalesRepwide$`2023-26`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Weekly_SalesRepwide$`2023-25` <- format(Weekly_SalesRepwide$`2023-25`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Weekly_SalesRepwide$`2023-24` <- format(Weekly_SalesRepwide$`2023-24`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Weekly_SalesRepwide$`2023-23` <- format(Weekly_SalesRepwide$`2023-23`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Weekly_SalesRepwide$`2023-22` <- format(Weekly_SalesRepwide$`2023-22`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Weekly_SalesRepwide$`2023-21` <- format(Weekly_SalesRepwide$`2023-21`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Weekly_SalesRepwide$`2023-20` <- format(Weekly_SalesRepwide$`2023-20`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Weekly_SalesRepwide$`2023-19` <- format(Weekly_SalesRepwide$`2023-19`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Weekly_SalesRepwide$`2023-18` <- format(Weekly_SalesRepwide$`2023-18`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Weekly_SalesRepwide$`2023-17` <- format(Weekly_SalesRepwide$`2023-17`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Weekly_SalesRepwide$`2023-16` <- format(Weekly_SalesRepwide$`2023-16`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Weekly_SalesRepwide
+
+```
+
+```{r}
+# Group data by week and sum values
+weekly_sum <- Data %>%
+  group_by(week = format(TRNS.DATE, "%Y-%U"),CUSTOMER) %>%
+  summarise(sum = sum(VALUE)) %>% arrange(desc(week))
+
+# Reshape the data from long to wide format
+Weekly_SalesRepwide <- dcast(weekly_sum,CUSTOMER ~  week, value.var = "sum") %>% select(1,120,119,118,117,116,115,114,113,112,111,110) %>% arrange(desc(`2023-25`))
+
+# Format the salary column as custom accounting values
+Weekly_SalesRepwide$`2023-26` <- format(Weekly_SalesRepwide$`2023-26`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Weekly_SalesRepwide$`2023-25` <- format(Weekly_SalesRepwide$`2023-25`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Weekly_SalesRepwide$`2023-24` <- format(Weekly_SalesRepwide$`2023-24`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Weekly_SalesRepwide$`2023-23` <- format(Weekly_SalesRepwide$`2023-23`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Weekly_SalesRepwide$`2023-22` <- format(Weekly_SalesRepwide$`2023-22`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Weekly_SalesRepwide$`2023-21` <- format(Weekly_SalesRepwide$`2023-21`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Weekly_SalesRepwide$`2023-20` <- format(Weekly_SalesRepwide$`2023-20`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Weekly_SalesRepwide$`2023-19` <- format(Weekly_SalesRepwide$`2023-19`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Weekly_SalesRepwide$`2023-18` <- format(Weekly_SalesRepwide$`2023-18`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Weekly_SalesRepwide$`2023-17` <- format(Weekly_SalesRepwide$`2023-17`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Weekly_SalesRepwide$`2023-16` <- format(Weekly_SalesRepwide$`2023-16`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Weekly_SalesRepwide
+```
+

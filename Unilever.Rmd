@@ -1,0 +1,117 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+# Group the data by month and sum the sales for each month
+UnileverProd <- Unilever %>%
+  mutate(Day = floor_date(TRNS.DATE, "month")) %>%
+  group_by(Day,CUSTOMER,SALES.REP) %>%
+  summarize(Sales = sum(VALUE))
+
+
+# Reshape the data from long to wide format
+UnileverProd <- dcast(UnileverProd, CUSTOMER + SALES.REP ~  Day, value.var = "Sales")   %>% select(1,2,29,28,27,26) %>% arrange(desc(`2023-06-01`))
+
+# Format the salary column as custom accounting values
+
+
+UnileverProd$`2023-06-01` <- format(UnileverProd$`2023-06-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+UnileverProd$`2023-05-01` <- format(UnileverProd$`2023-05-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+UnileverProd$`2023-04-01` <- format(UnileverProd$`2023-04-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+UnileverProd$`2023-03-01` <- format(UnileverProd$`2023-03-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+UnileverProd
+```
+
+```{r}
+# Group the data by month and sum the sales for each month
+UnileverSales <- Unilever %>%
+  mutate(Day = floor_date(TRNS.DATE, "month")) %>%
+  group_by(Day,SALES.REP) %>%
+  summarize(Sales = sum(VALUE))
+
+
+# Reshape the data from long to wide format
+UnileverSales <- dcast(UnileverSales,  SALES.REP ~  Day, value.var = "Sales") %>% mutate(Targets = c( 12006715.10,12006715.10,12006715.10, 12006715.10, 15588555.38, 15588555.38, 15588555.38, NA,  NA,  NA, NA,NA,NA,NA,NA,NA,NA)) %>% select(1,29,28,27,26,25,24) %>% arrange(desc(`2023-06-01`))
+
+# Format the salary column as custom accounting values
+
+UnileverSales$`2023-07-01` <- format(UnileverSales$`2023-07-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+UnileverSales$`2023-06-01` <- format(UnileverSales$`2023-06-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+UnileverSales$`2023-05-01` <- format(UnileverSales$`2023-05-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+UnileverSales$`2023-04-01` <- format(UnileverSales$`2023-04-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+UnileverSales$`2023-03-01` <- format(UnileverSales$`2023-03-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+UnileverSales$`2023-02-01` <- format(UnileverSales$`2023-02-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+
+UnileverSales
+
+```
+
+```{r}
+
+BeatriceUni <- subset(Unilever, SALES.REP == "Beatrice ")
+
+# Group the data by month and sum the sales for each month
+UnileverBeatrice <- BeatriceUni %>%
+  mutate(month = floor_date(TRNS.DATE, "month")) %>%
+  group_by(month,BRAND,CUSTOMER) %>%
+  summarize(Sales = sum(VALUE))
+
+
+# Reshape the data from long to wide format
+UnileverBeatrice <- dcast(UnileverBeatrice,  CUSTOMER +  BRAND ~ month , value.var = "Sales")   %>% select(1,2,29,28,27,26,25,24) %>% arrange(desc(`2023-06-01`)) 
+
+
+UnileverBeatrice$`2023-06-01` <- format(UnileverBeatrice$`2023-06-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+UnileverBeatrice$`2023-05-01` <- format(UnileverBeatrice$`2023-05-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+UnileverBeatrice$`2023-04-01` <- format(UnileverBeatrice$`2023-04-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+UnileverBeatrice$`2023-03-01` <- format(UnileverBeatrice$`2023-03-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+UnileverBeatrice$`2023-02-01` <- format(UnileverBeatrice$`2023-02-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+UnileverBeatrice$`2023-01-01` <- format(UnileverBeatrice$`2023-01-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+UnileverBeatrice
+```
+```{r}
+ReginaUni <- subset(Unilever, SALES.REP == "Regina ")
+
+# Group the data by month and sum the sales for each month
+UnileverRegina <- ReginaUni %>%
+  mutate(month = floor_date(TRNS.DATE, "month")) %>%
+  group_by(month,BRAND,CUSTOMER) %>%
+  summarize(Sales = sum(VALUE))
+
+
+# Reshape the data from long to wide format
+UnileverRegina <- dcast(UnileverRegina,  CUSTOMER +  BRAND ~ month , value.var = "Sales")   %>% select(1,2,29,28,27,26,25,24) %>% arrange(desc(`2023-06-01`))
+
+
+UnileverRegina$`2023-06-01` <- format(UnileverRegina$`2023-06-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+UnileverRegina$`2023-05-01` <- format(UnileverRegina$`2023-05-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+UnileverRegina$`2023-04-01` <- format(UnileverRegina$`2023-04-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+UnileverRegina$`2023-03-01` <- format(UnileverRegina$`2023-03-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+UnileverRegina$`2023-02-01` <- format(UnileverRegina$`2023-02-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+UnileverRegina$`2023-01-01` <- format(UnileverRegina$`2023-01-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+UnileverRegina
+```
+```{r}
+WanyonyiUni <- subset(Unilever, SALES.REP == "Wanyonyi")
+
+# Group the data by month and sum the sales for each month
+UnileverWanyonyi <- WanyonyiUni %>%
+  mutate(month = floor_date(TRNS.DATE, "month")) %>%
+  group_by(month,BRAND,CUSTOMER) %>%
+  summarize(Sales = sum(VALUE))
+
+
+# Reshape the data from long to wide format
+UnileverWanyonyi <- dcast(UnileverWanyonyi,  CUSTOMER +  BRAND ~ month , value.var = "Sales")   %>% select(1,2,19,18,17,16,15,14) %>% arrange(desc(`2023-06-01`))
+
+
+UnileverWanyonyi$`2023-06-01` <- format(UnileverWanyonyi$`2023-06-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+UnileverWanyonyi$`2023-05-01` <- format(UnileverWanyonyi$`2023-05-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+UnileverWanyonyi$`2023-04-01` <- format(UnileverWanyonyi$`2023-04-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+UnileverWanyonyi$`2023-03-01` <- format(UnileverWanyonyi$`2023-03-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+UnileverWanyonyi$`2023-02-01` <- format(UnileverWanyonyi$`2023-02-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+UnileverWanyonyi$`2023-01-01` <- format(UnileverWanyonyi$`2023-01-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+UnileverWanyonyi
+```
+

@@ -1,0 +1,128 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+# Group the data by month and sum the sales for each month
+Richard_monthly <- Richard %>%
+  mutate(month = floor_date(TRNS.DATE, "month")) %>%
+  group_by(month) %>%
+  summarize(Sales = sum(VALUE))
+
+# Create a time series plot
+
+# convert month column to date format
+Richard_monthly$month <- as.Date(paste0(Richard_monthly$month, "-01"))
+
+# create xts time series object
+Richard_monthlyts <- xts(Richard_monthly$Sales, order.by = Richard_monthly$month)
+
+PlotRichard <- dygraph(Richard_monthlyts)%>%
+  dyHighlight(highlightCircleSize = 5, 
+              highlightSeriesOpts = list(strokeWidth = 3)) %>%
+  dyOptions(colors = RColorBrewer::brewer.pal(8, "Dark2")) %>%
+  dyLegend(show = "always")
+PlotRichard
+```
+
+```{r}
+RichardSum <- Richard %>%
+  group_by(CUSTOMER) %>%
+  summarize(Value = sum(VALUE))
+ 
+
+# Horizontal bar plot 
+plot(RichardBar <- ggplot(RichardSum, aes(x = CUSTOMER, y = Value , fill = CUSTOMER)) +
+  geom_bar(stat = "identity", position = "identity") +
+  coord_flip() + 
+  theme_minimal() +
+  theme(legend.position = "none",
+        plot.title = element_text(hjust = 0.5)) +
+  labs(
+    title = "Store Performance",
+  ))
+```
+```{r}
+# Group the data by month and sum the sales for each month
+Richard_grouped <- Richard %>%
+  group_by(month = format(floor_date(TRNS.DATE, unit = "month"), "%Y-%m"), CUSTOMER ) %>%
+  summarise(Sales = sum(VALUE))
+
+# Reshape the data from long to wide format
+Richard_wide <- dcast(Richard_grouped, CUSTOMER ~ month , value.var = "Sales") %>%
+  arrange(desc(`2023-06`)) %>%  select(1,12)
+
+# Format the salary column as custom accounting values
+Richard_wide$`2023-06` <- format(Richard_wide$`2023-06`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Richard_wide
+```
+
+
+
+
+```{r}
+# Group the data by month and sum the sales for each month
+Richard_monthly <- Richard %>%
+  group_by(month = format(floor_date(TRNS.DATE, unit = "month"), "%Y-%m")) %>%
+  summarise(Sales = sum(VALUE)) %>% arrange(desc(month))
+
+
+#Creating an new column
+Richard_total <-
+Richard_monthly %>%  mutate(Targets = c( 973198.90,973198.90,973198.90, 2463289.66, 2463289.66, 2463289.66, NA,  NA,  NA, NA,  NA)) %>% mutate(`Achievement % ` = ifelse(is.na(Targets), NA,  paste0(round(Sales / Targets * 100), "%")))
+
+# Format the salary column as custom accounting values
+Richard_total$Sales <- format(Richard_total$Sales, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Richard_total$Targets <- format(Richard_total$Targets, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Richard_total
+
+```
+
+```{r}
+# Branch Sales
+
+Richard_Customer <- Richard %>%
+  group_by(month = format(floor_date(TRNS.DATE, unit = "month"), "%Y-%m"), CUSTOMER ) %>%
+  summarise(Sales = sum(VALUE))
+
+# Reshape the data from long to wide format
+Richard_CustoRmerwide <- dcast(Richard_Customer, CUSTOMER  ~  month, value.var = "Sales") %>% arrange(desc(`2023-06`)) %>% select(1,12)
+Richard_CustoRmerwide$`2023-06` <- format(Richard_CustoRmerwide$`2023-06`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Richard_CustoRmerwide
+'
+Richard_CustoRmerwide  <- Richard_CustoRmerwide  %>% 
+mutate(TargetsMay = c( 0,24276,39450.8,94714.51,39000,0,58572.28,13241.95,241809.17,0,7708.55,0,0,44955.34,91015.76,12240.00,81597,0,62854.78,120904,0,40443.8,0,48361.6,40053.02,0,0,0,0,1374450,52120.73))   %>% mutate(`AchievementMay % ` = ifelse(is.na(`2023-05`), 0, paste0(round(`2023-05`/ TargetsMay * 100), "%"))) %>% arrange(desc(`2023-06`)) %>% select(1,12)
+
+# Format the salary column as custom accounting values
+Richard_CustoRmerwide$`2023-06` <- format(Richard_CustoRmerwide$`2023-06`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Richard_CustoRmerwide$`2023-05` <- format(Richard_CustoRmerwide$`2023-05`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Richard_CustoRmerwide$`2023-04` <- format(Richard_CustoRmerwide$`2023-04`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Richard_CustoRmerwide$`2023-03` <- format(Richard_CustoRmerwide$`2023-03`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Richard_CustoRmerwide$`2023-02` <- format(Richard_CustoRmerwide$`2023-02`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+```
+
+
+```{r}
+# Group the data by month and sum the sales for each month
+
+Richard_brand <- Richard %>%
+  group_by(month = format(floor_date(TRNS.DATE, unit = "month"), "%Y-%m"), BRAND ) %>%
+  summarise(Sales = sum(VALUE))
+
+
+# Reshape the data from long to wide format
+Richard_Brandwide <- dcast(Richard_brand, BRAND  ~  month, value.var = "Sales")  %>% arrange(desc(`2023-06`))  %>% select(1,12,11,10,9,8,7)
+
+# Format the salary column as custom accounting values
+Richard_Brandwide$`2023-06` <- format(Richard_Brandwide$`2023-06`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Richard_Brandwide$`2023-05` <- format(Richard_Brandwide$`2023-05`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Richard_Brandwide$`2023-04` <- format(Richard_Brandwide$`2023-04`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Richard_Brandwide$`2023-03` <- format(Richard_Brandwide$`2023-03`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Richard_Brandwide$`2023-02` <- format(Richard_Brandwide$`2023-02`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Richard_Brandwide$`2023-01` <- format(Richard_Brandwide$`2023-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+
+
+```
+
+

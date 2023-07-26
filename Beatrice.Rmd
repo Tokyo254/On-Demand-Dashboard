@@ -1,0 +1,209 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+# Group the data by month and sum the sales for each month
+Beatrice_monthly <- Beatrice %>%
+  mutate(month = floor_date(TRNS.DATE, "month")) %>%
+  group_by(month) %>%
+  summarize(Sales = sum(VALUE))
+
+# Create a time series plot
+
+# convert month column to date format
+Beatrice_monthly$month <- as.Date(paste0(Beatrice_monthly$month, "-01"))
+
+# create xts time series object
+Beatrice_monthlyts <- xts(Beatrice_monthly$Sales, order.by = Beatrice_monthly$month)
+
+PlotBeatrice <- dygraph(Beatrice_monthlyts)%>%
+  dyHighlight(highlightCircleSize = 5, 
+              highlightSeriesOpts = list(strokeWidth = 3)) %>%
+  dyOptions(colors = RColorBrewer::brewer.pal(8, "Dark2")) %>%
+  dyLegend(show = "always") 
+
+PlotBeatrice
+
+```
+
+
+```{r}
+# Aggregate data by summing values for each category
+
+Beatrice1 <- Beatrice %>%
+  group_by(CUSTOMER) %>%
+  summarize(Value = sum(VALUE))
+
+# Horizontal bar plot 
+plot(BeatriceBar <- ggplot(Beatrice1, aes(x = CUSTOMER, y = Value , fill = CUSTOMER)) +
+  geom_bar(stat = "identity", position = "identity") +
+  coord_flip() + 
+  theme_minimal() +
+  theme(legend.position = "none",
+        plot.title = element_text(hjust = 0.5)) +
+  labs(
+    title = "Store Performance",
+    x = "Value"
+  ))
+```
+
+```{r}
+# Group the data by month and sum the sales for each month
+Beatrice_monthly <- Beatrice %>%
+  group_by(month = format(floor_date(TRNS.DATE, unit = "month"), "%Y-%m")) %>%
+  summarise(Sales = sum(VALUE)) %>% 
+  arrange(desc(month))
+
+
+Beatrice_monthlywide <-
+Beatrice_monthly %>% 
+ mutate(Targets = c(  3059416.14 ,3430144.18,3430144.18 ,  3430144.18 , 3149518.78, 3149518.78, 3149518.78, NA,  NA,  NA, NA,  NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA))  %>% mutate(`Achievement % ` = ifelse(is.na(Targets), 0, paste0(round( Sales / Targets * 100), "%"))) 
+
+
+# Format the salary column as custom accounting values
+
+Beatrice_monthlywide$Sales <- format(Beatrice_monthlywide$Sales, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Beatrice_monthlywide$Targets <- format(Beatrice_monthlywide$Targets, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Beatrice_monthlywide
+```
+
+```{r}
+
+# Group the data by month and sum the sales for each month
+Beatrice_grouped <- Beatrice %>%
+  group_by(month = format(floor_date(TRNS.DATE, unit = "month"), "%Y-%m"), CUSTOMER ) %>%
+  summarise(Sales = sum(VALUE))
+
+
+# Reshape the data from long to wide format
+Beatrice_wide <- dcast(Beatrice_grouped,CUSTOMER ~ month, value.var = "Sales") %>%
+select(1,29) %>% arrange(desc(`2023-07`)) %>% 
+ mutate(`Contribution` = paste0(round(c(
+66.26,
+12.26,
+11.00,
+4.10,
+2.55,
+2.04,
+1.80,
+0
+),2), "%"))
+Beatrice_wide$`2023-07` <- format(Beatrice_wide$`2023-07`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+
+Beatrice_wide
+
+
+#Creating an new column 
+#Beatrice_wide <-
+' Beatrice_wide %>% mutate(`Total Sales` = `Chandarana Supermarket Ltd` + `Majid Al Futtaim` + `ONN THE WAY`) %>% 
+ mutate( `Contribution Chandarana`= paste0(round(`Chandarana Supermarket Ltd` / `Total Sales` * 100),"%"),` Contribution Carrefour`= paste0(round(`Majid Al Futtaim` / `Total Sales` * 100),"%"),`Contribution ONN THE WAY`= paste0(round(`ONN THE WAY` / `Total Sales` * 100),"%")) %>% select(1,2,6,3,7,4,8,5) %>%
+  arrange(desc(month))
+
+# Format the salary column as custom accounting values
+
+Beatrice_wide$`Chandarana Supermarket Ltd` <- format(Beatrice_wide$`Chandarana Supermarket Ltd`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Beatrice_wide$`Majid Al Futtaim` <- format(Beatrice_wide$`Majid Al Futtaim`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Beatrice_wide$`ONN THE WAY` <- format(Beatrice_wide$`ONN THE WAY`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Beatrice_wide$`Total Sales` <- format(Beatrice_wide$`Total Sales`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+'
+```
+
+
+
+```{r}
+# Group the data by month and sum the sales for each month
+Beatrice_branch <- Beatrice %>%
+  group_by(month = format(floor_date(TRNS.DATE, unit = "month"), "%Y-%m"), BRANCH ) %>%
+  summarise(Sales = sum(VALUE))
+
+
+
+# Reshape the data from long to wide format
+Beatrice_branchWide <- dcast(Beatrice_branch, BRANCH ~ month , value.var = "Sales") %>% arrange(desc(`2023-07`))  %>% select(1,29,28,27,26,25,24,23)
+
+# Format the salary column as custom accounting values
+Beatrice_branchWide$`2023-07` <- format(Beatrice_branchWide$`2023-07`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Beatrice_branchWide$`2023-06` <- format(Beatrice_branchWide$`2023-06`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Beatrice_branchWide$`2023-05` <- format(Beatrice_branchWide$`2023-05`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Beatrice_branchWide$`2023-04` <- format(Beatrice_branchWide$`2023-04`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Beatrice_branchWide$`2023-03` <- format(Beatrice_branchWide$`2023-03`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Beatrice_branchWide$`2023-02` <- format(Beatrice_branchWide$`2023-02`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Beatrice_branchWide$`2023-01` <- format(Beatrice_branchWide$`2023-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Beatrice_branchWide
+
+```
+
+
+```{r}
+# Group the data by month and sum the sales for each month
+Beatrice_Customer <- Beatrice %>%
+  group_by(month = format(floor_date(TRNS.DATE, unit = "month"), "%Y-%m"), CUSTOMER ) %>%
+  summarise(Sales = sum(VALUE))
+
+
+# Reshape the data from long to wide format
+Beatrice_Customerwide <- dcast(Beatrice_Customer, CUSTOMER  ~  month, value.var = "Sales") %>% select(1,29,28,27,26,25,24) %>%
+ arrange(desc(`2023-07`))
+
+Beatrice_Customerwide$`2023-07` <- format(Beatrice_Customerwide$`2023-07`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Beatrice_Customerwide$`2023-06` <- format(Beatrice_Customerwide$`2023-06`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Beatrice_Customerwide$`2023-05` <- format(Beatrice_Customerwide$`2023-05`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Beatrice_Customerwide$`2023-04` <- format(Beatrice_Customerwide$`2023-04`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Beatrice_Customerwide$`2023-03` <- format(Beatrice_Customerwide$`2023-03`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Beatrice_Customerwide$`2023-02` <- format(Beatrice_Customerwide$`2023-02`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Beatrice_Customerwide
+'
+Beatrice_Customerwide <- Beatrice_Customerwide %>% 
+mutate(TargetsJune = c(1000324.96, 2326584.33, 103234.89)) %>%
+mutate(TargetsMay = c( 1000324.96, 2326584.33, 103234.89))  %>%
+mutate(TargetsApril = c(1000324.96, 2326584.33, 103234.89)) %>%   
+mutate(TargetsMarch = c( 691101.42,2338070.50,120346.86)) %>%  
+mutate(TargetsFeb = c( 691101.42,2338070.50,120346.86)) %>%  
+mutate(TargetsJan = c(691101.42,2338070.50,120346.86)) %>%
+mutate(`AchievementJan % ` =  paste0(round(`2023-01`/ TargetsJan * 100), "%"))  %>% 
+mutate(`AchievementFeb % ` =  paste0(round(`2023-02`/ TargetsFeb * 100), "%")) %>% 
+mutate(`AchievementMar % ` =  paste0(round(`2023-03`/ TargetsMarch * 100), "%")) %>% 
+mutate(`AchievementApr % ` =  paste0(round(`2023-04`/ TargetsApril * 100), "%")) %>% 
+mutate(`AchievementMay % ` =  paste0(round(`2023-05`/ TargetsMay * 100), "%"))  %>% 
+mutate(`AchievementJune % ` =  paste0(round(`2023-06`/ TargetsJune * 100), "%"))  %>%
+select(1,28,29,40,27,30,39,26,31,38,25,32,37,24,32,37,24,33,36)
+'
+
+'
+Beatrice_Customerwide$TargetsJan <- format(Beatrice_Customerwide$TargetsJan, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Beatrice_Customerwide$TargetsFeb <- format(Beatrice_Customerwide$TargetsFeb, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Beatrice_Customerwide$TargetsMarch <- format(Beatrice_Customerwide$TargetsMarch, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Beatrice_Customerwide$TargetsApril <- format(Beatrice_Customerwide$TargetsApril, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Beatrice_Customerwide$TargetsMay <- format(Beatrice_Customerwide$TargetsMay, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Beatrice_Customerwide$TargetsMJune <- format(Beatrice_Customerwide$TargetsJune, big.mark = ",", decimal.mark = ".", nsmall = 0)
+'
+
+```
+```{r}
+# Group the data by month and sum the sales for each month
+Beatrice_brand <- Beatrice %>%
+  group_by(month = format(floor_date(TRNS.DATE, unit = "month"), "%Y-%m"), BRAND ) %>%
+  summarise(Sales = sum(VALUE))
+
+
+# Reshape the data from long to wide format
+Beatrice_Brandwide <- dcast(Beatrice_brand, BRAND  ~  month, value.var = "Sales") %>% select(1,29,28,27,26,25,24,23) %>% arrange(desc(`2023-07`))
+
+# Format the salary column as custom accounting values
+
+Beatrice_Brandwide$`2023-07` <- format(Beatrice_Brandwide$`2023-07`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Beatrice_Brandwide$`2023-06` <- format(Beatrice_Brandwide$`2023-06`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Beatrice_Brandwide$`2023-05` <- format(Beatrice_Brandwide$`2023-05`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Beatrice_Brandwide$`2023-04` <- format(Beatrice_Brandwide$`2023-04`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Beatrice_Brandwide$`2023-03` <- format(Beatrice_Brandwide$`2023-03`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Beatrice_Brandwide$`2023-02` <- format(Beatrice_Brandwide$`2023-02`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Beatrice_Brandwide$`2023-01` <- format(Beatrice_Brandwide$`2023-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+
+Beatrice_Brandwide
+```
+
+
+
+

@@ -1,0 +1,145 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+
+
+Wanyonyi_monthly <- Wanyonyi %>%
+  mutate(month = floor_date(TRNS.DATE, "month")) %>%
+  group_by(month) %>%
+  summarize(Sales = sum(VALUE))
+
+# Create a time series plot
+
+# convert month column to date format
+Wanyonyi_monthly$month <- as.Date(paste0(Wanyonyi_monthly$month, "-01"))
+
+# create xts time series object
+Wanyonyi_monthlyts <- xts(Wanyonyi_monthly$Sales, order.by = Wanyonyi_monthly$month)
+
+PlotWanyonyi <- dygraph(Wanyonyi_monthlyts)%>%
+  dyHighlight(highlightCircleSize = 5, 
+              highlightSeriesOpts = list(strokeWidth = 3)) %>%
+  dyOptions(colors = RColorBrewer::brewer.pal(8, "Dark2")) %>%
+  dyLegend(show = "always")
+PlotWanyonyi
+```
+
+
+```{r}
+# Aggregate data by summing values for each category
+ WanyonyiSum <- Wanyonyi %>%
+  group_by(CUSTOMER) %>%
+  summarize(Value = sum(VALUE))
+ 
+
+# Horizontal bar plot 
+plot(WanyonyiBar <- ggplot(WanyonyiSum, aes(x = CUSTOMER, y = Value , fill = CUSTOMER)) +
+  geom_bar(stat = "identity", position = "identity") +
+  coord_flip() + 
+  theme_minimal() +
+  theme(legend.position = "none",
+        plot.title = element_text(hjust = 0.5)) +
+  labs(
+    title = "Store Performance",
+  ))
+```
+
+```{r}
+# Group the data by month and sum the sales for each month
+Wanyonyi_grouped <- Wanyonyi %>%
+  group_by(month = format(floor_date(TRNS.DATE, unit = "month"), "%Y-%m"),CUSTOMER) %>%
+  summarise(Sales = sum(VALUE))
+
+# Reshape the data from long to wide format
+Wanyonyi_wide <- dcast(Wanyonyi_grouped,CUSTOMER ~ month , value.var = "Sales") %>%
+  arrange(desc(`2023-06`)) %>% select(1,20,19,18,17,16,15,14)
+
+# Format the salary column as custom accounting values
+Wanyonyi_wide$`2023-07` <- format(Wanyonyi_wide$`2023-07`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Wanyonyi_wide$`2023-06` <- format(Wanyonyi_wide$`2023-06`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Wanyonyi_wide$`2023-05` <- format(Wanyonyi_wide$`2023-05`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Wanyonyi_wide$`2023-04` <- format(Wanyonyi_wide$`2023-04`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Wanyonyi_wide$`2023-03` <- format(Wanyonyi_wide$`2023-03`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Wanyonyi_wide$`2023-02` <- format(Wanyonyi_wide$`2023-02`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Wanyonyi_wide$`2023-01` <- format(Wanyonyi_wide$`2023-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+
+Wanyonyi_wide
+
+```
+
+```{r}
+# Group the data by month and sum the sales for each month
+
+Wanyonyi_monthly <- Wanyonyi %>%
+  group_by(month = format(floor_date(TRNS.DATE, unit = "month"), "%Y-%m")) %>%
+  summarise(Sales = sum(VALUE))  %>% arrange(desc(month))
+
+
+#Creating an new column
+Wanyonyi_total <-
+Wanyonyi_monthly %>%  mutate(Targets = c( 3688128.84 , 5489432.36,2489432.36, 2489432.36 , 4182493.66, 4182493.66, 4182493.66, NA,  NA,  NA, NA,  NA,  NA,  NA,  NA,  NA,  NA,  NA,  NA)) %>% mutate(`Achievement % ` = ifelse(is.na(Targets), NA,  paste0(round(Sales / Targets * 100), "%")))
+
+
+
+# Format the salary column as custom accounting values
+
+Wanyonyi_total$Sales <- format(Wanyonyi_total$Sales, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Wanyonyi_total$Targets <- format(Wanyonyi_total$Targets, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Wanyonyi_total
+
+```
+
+
+```{r}
+# Branch Sales
+Wanyonyi_Customer <- Wanyonyi %>%
+  group_by(month = format(floor_date(TRNS.DATE, unit = "month"), "%Y-%m"),CUSTOMER) %>%
+  summarise(Sales = sum(VALUE))  %>% arrange(desc(month))
+
+# Reshape the data from long to wide format
+Wanyonyi_Customerwide <- dcast(Wanyonyi_Customer, CUSTOMER  ~  month, value.var = "Sales") 
+
+Wanyonyi_Customerwide  <- Wanyonyi_Customerwide  %>% 
+mutate(TargetsMay = c(NA,NA,NA,NA,NA,2278981.09,NA,NA,1806789.38,241808)) %>% 
+mutate(`AchievementMay % ` = ifelse(is.na(TargetsMay), 0, paste0(round(`2023-06`/ TargetsMay * 100), "%"))) %>% arrange(desc(`2023-07`))  %>% 
+select(1,20,19,18,17,16,15)
+
+
+# Format the salary column as custom accounting values
+Wanyonyi_Customerwide$`2023-07` <- format(Wanyonyi_Customerwide$`2023-07`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Wanyonyi_Customerwide$`2023-06` <- format(Wanyonyi_Customerwide$`2023-06`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Wanyonyi_Customerwide$`2023-05` <- format(Wanyonyi_Customerwide$`2023-05`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Wanyonyi_Customerwide$`2023-04` <- format(Wanyonyi_Customerwide$`2023-04`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Wanyonyi_Customerwide$`2023-03` <- format(Wanyonyi_Customerwide$`2023-03`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Wanyonyi_Customerwide$`2023-02` <- format(Wanyonyi_Customerwide$`2023-02`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Wanyonyi_Customerwide
+```
+
+```{r}
+# Group the data by month and sum the sales for each month
+
+Wanyonyi_brand <- Wanyonyi %>%
+  group_by(month = format(floor_date(TRNS.DATE, unit = "month"), "%Y-%m"),BRAND) %>%
+  summarise(Sales = sum(VALUE))
+
+
+
+# Reshape the data from long to wide format
+Wanyonyi_Brandwide <- dcast(Wanyonyi_brand, BRAND  ~  month, value.var = "Sales") %>% select(1,20,19,18,17,16,15,14) %>% arrange(desc(`2023-07`))
+
+# Format the salary column as custom accounting values
+Wanyonyi_Brandwide$`2023-07` <- format(Wanyonyi_Brandwide$`2023-07`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Wanyonyi_Brandwide$`2023-06` <- format(Wanyonyi_Brandwide$`2023-06`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Wanyonyi_Brandwide$`2023-05` <- format(Wanyonyi_Brandwide$`2023-05`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Wanyonyi_Brandwide$`2023-04` <- format(Wanyonyi_Brandwide$`2023-04`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Wanyonyi_Brandwide$`2023-03` <- format(Wanyonyi_Brandwide$`2023-03`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Wanyonyi_Brandwide$`2023-02` <- format(Wanyonyi_Brandwide$`2023-02`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Wanyonyi_Brandwide$`2023-01` <- format(Wanyonyi_Brandwide$`2023-01`, big.mark = ",", decimal.mark = ".", nsmall = 0)
+Wanyonyi_Brandwide
+```
+
+
+
+

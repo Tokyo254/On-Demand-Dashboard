@@ -1,0 +1,321 @@
+Loading required package: DBI
+Error in h(simpleError(msg, call)) : 
+  error in evaluating the argument 'value' in selecting a method for function 'dbWriteTable': object 'scraped_data' not found
+Calls: main ... send_to_db -> dbWriteTable -> .handleSimpleError -> h
+Execution halted
+Loading required package: DBI
+Error in h(simpleError(msg, call)) : 
+  error in evaluating the argument 'value' in selecting a method for function 'dbWriteTable': object 'scraped_data' not found
+Calls: main ... send_to_db -> dbWriteTable -> .handleSimpleError -> h
+Execution halted
+Loading required package: DBI
+Error in h(simpleError(msg, call)) : 
+  error in evaluating the argument 'value' in selecting a method for function 'dbWriteTable': object 'scraped_data' not found
+Calls: main ... send_to_db -> dbWriteTable -> .handleSimpleError -> h
+Execution halted
+Loading required package: DBI
+Error in h(simpleError(msg, call)) : 
+  error in evaluating the argument 'value' in selecting a method for function 'dbWriteTable': object 'scraped_data' not found
+Calls: main ... send_to_db -> dbWriteTable -> .handleSimpleError -> h
+Execution halted
+Loading required package: DBI
+Error in h(simpleError(msg, call)) : 
+  error in evaluating the argument 'value' in selecting a method for function 'dbWriteTable': object 'scraped_data' not found
+Calls: main ... send_to_db -> dbWriteTable -> .handleSimpleError -> h
+Execution halted
+Loading required package: DBI
+Error in h(simpleError(msg, call)) : 
+  error in evaluating the argument 'value' in selecting a method for function 'dbWriteTable': object 'scraped_data' not found
+Calls: main ... send_to_db -> dbWriteTable -> .handleSimpleError -> h
+Execution halted
+Loading required package: DBI
+Error in h(simpleError(msg, call)) : 
+  error in evaluating the argument 'value' in selecting a method for function 'dbWriteTable': object 'scraped_data' not found
+Calls: main ... send_to_db -> dbWriteTable -> .handleSimpleError -> h
+Execution halted
+Loading required package: DBI
+Error in h(simpleError(msg, call)) : 
+  error in evaluating the argument 'value' in selecting a method for function 'dbWriteTable': object 'scraped_data' not found
+Calls: main ... send_to_db -> dbWriteTable -> .handleSimpleError -> h
+Execution halted
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+Error in open.connection(x, "rb") : 
+  Timeout was reached: [naivas.online] Failed to connect to naivas.online port 443 after 9141 ms: Timed out
+Calls: main -> scrape_data -> read_html -> read_html.default
+Execution halted
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+Error in .local(drv, ...) : 
+  Failed to connect to database: Error: Can't connect to server on 'localhost' (10061)
+Calls: main ... send_to_db -> dbConnect -> dbConnect -> .local -> .Call
+Execution halted
+Loading required package: DBI
+Error in .local(drv, ...) : 
+  Failed to connect to database: Error: Can't connect to server on 'localhost' (10061)
+Calls: main ... send_to_db -> dbConnect -> dbConnect -> .local -> .Call
+Execution halted
+Loading required package: DBI
+Error in .local(drv, ...) : 
+  Failed to connect to database: Error: Can't connect to server on 'localhost' (10061)
+Calls: main ... send_to_db -> dbConnect -> dbConnect -> .local -> .Call
+Execution halted
+Loading required package: DBI
+Error in .local(drv, ...) : 
+  Failed to connect to database: Error: Can't connect to server on 'localhost' (10061)
+Calls: main ... send_to_db -> dbConnect -> dbConnect -> .local -> .Call
+Execution halted
+Loading required package: DBI
+Error in .local(drv, ...) : 
+  Failed to connect to database: Error: Can't connect to server on 'localhost' (10061)
+Calls: main ... send_to_db -> dbConnect -> dbConnect -> .local -> .Call
+Execution halted
+Loading required package: DBI
+Error in .local(drv, ...) : 
+  Failed to connect to database: Error: Can't connect to server on 'localhost' (10061)
+Calls: main ... send_to_db -> dbConnect -> dbConnect -> .local -> .Call
+Execution halted
+Loading required package: DBI
+Error in .local(drv, ...) : 
+  Failed to connect to database: Error: Can't connect to server on 'localhost' (10061)
+Calls: main ... send_to_db -> dbConnect -> dbConnect -> .local -> .Call
+Execution halted
+Loading required package: DBI
+Error in .local(drv, ...) : 
+  Failed to connect to database: Error: Can't connect to server on 'localhost' (10061)
+Calls: main ... send_to_db -> dbConnect -> dbConnect -> .local -> .Call
+Execution halted
+Loading required package: DBI
+Error in .local(drv, ...) : 
+  Failed to connect to database: Error: Can't connect to server on 'localhost' (10061)
+Calls: main ... send_to_db -> dbConnect -> dbConnect -> .local -> .Call
+Execution halted
+Loading required package: DBI
+Error in .local(drv, ...) : 
+  Failed to connect to database: Error: Can't connect to server on 'localhost' (10061)
+Calls: main ... send_to_db -> dbConnect -> dbConnect -> .local -> .Call
+Execution halted
+Loading required package: DBI
+Error in .local(drv, ...) : 
+  Failed to connect to database: Error: Can't connect to server on 'localhost' (10061)
+Calls: main ... send_to_db -> dbConnect -> dbConnect -> .local -> .Call
+Execution halted
+Loading required package: DBI
+Error in .local(drv, ...) : 
+  Failed to connect to database: Error: Can't connect to server on 'localhost' (10061)
+Calls: main ... send_to_db -> dbConnect -> dbConnect -> .local -> .Call
+Execution halted
+Loading required package: DBI
+Error in .local(drv, ...) : 
+  Failed to connect to database: Error: Can't connect to server on 'localhost' (10061)
+Calls: main ... send_to_db -> dbConnect -> dbConnect -> .local -> .Call
+Execution halted
+Loading required package: DBI
+Error in .local(drv, ...) : 
+  Failed to connect to database: Error: Can't connect to server on 'localhost' (10061)
+Calls: main ... send_to_db -> dbConnect -> dbConnect -> .local -> .Call
+Execution halted
+Loading required package: DBI
+Error in .local(drv, ...) : 
+  Failed to connect to database: Error: Can't connect to server on 'localhost' (10061)
+Calls: main ... send_to_db -> dbConnect -> dbConnect -> .local -> .Call
+Execution halted
+Loading required package: DBI
+Error in .local(drv, ...) : 
+  Failed to connect to database: Error: Can't connect to server on 'localhost' (10061)
+Calls: main ... send_to_db -> dbConnect -> dbConnect -> .local -> .Call
+Execution halted
+Loading required package: DBI
+Error in .local(drv, ...) : 
+  Failed to connect to database: Error: Can't connect to server on 'localhost' (10061)
+Calls: main ... send_to_db -> dbConnect -> dbConnect -> .local -> .Call
+Execution halted
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+Error in .local(drv, ...) : 
+  Failed to connect to database: Error: Can't connect to server on 'localhost' (10061)
+Calls: main ... send_to_db -> dbConnect -> dbConnect -> .local -> .Call
+Execution halted
+Loading required package: DBI
+Error in .local(drv, ...) : 
+  Failed to connect to database: Error: Can't connect to server on 'localhost' (10061)
+Calls: main ... send_to_db -> dbConnect -> dbConnect -> .local -> .Call
+Execution halted
+Loading required package: DBI
+Error in open.connection(x, "rb") : Could not resolve host: naivas.online
+Calls: main -> scrape_data -> read_html -> read_html.default
+Execution halted
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+Error in open.connection(x, "rb") : 
+  Timeout was reached: [naivas.online] SSL/TLS connection timeout
+Calls: main -> scrape_data -> read_html -> read_html.default
+Execution halted
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+Error in open.connection(x, "rb") : 
+  Timeout was reached: [naivas.online] Resolving timed out after 10008 milliseconds
+Calls: main -> scrape_data -> read_html -> read_html.default
+Execution halted
+Loading required package: DBI
+Error in open.connection(x, "rb") : 
+  Timeout was reached: [naivas.online] Resolving timed out after 10003 milliseconds
+Calls: main -> scrape_data -> read_html -> read_html.default
+Execution halted
+Loading required package: DBI
+Error in open.connection(x, "rb") : 
+  Timeout was reached: [naivas.online] SSL/TLS connection timeout
+Calls: main -> scrape_data -> read_html -> read_html.default
+Execution halted
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+Loading required package: DBI
+
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
+Loading required package: DBI
+[1] TRUE
