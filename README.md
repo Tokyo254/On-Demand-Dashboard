@@ -1,3 +1,5 @@
-This is a sales dashboard for a distribution company which tracks each sales rep performance and output with regards to sales.
-It utilizes R shiny package.
+# On-Demand Dashboard
 
+## About
+
+An R Shiny dashboard for reviewing distribution-company sales activity and representative performance.
